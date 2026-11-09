@@ -2,11 +2,15 @@
 
 ## Install a released application
 
-Download the artifact for your operating system from the repository's Releases page:
+Download one file for your operating system from the repository's Releases page. Python, a
+terminal, and the source project are not required:
 
-- **macOS:** choose the Apple Silicon or Intel artifact for the Mac, unzip it, and open
+- **macOS:** download the Apple Silicon or Intel `.dmg`, open it, then double-click
   `SurveyCTO Module Library.app`.
-- **Windows:** unzip the Windows x64 artifact and open `SurveyCTO Module Library.exe`.
+- **Windows:** download the Windows x64 `.exe` and double-click it.
+
+The application starts a private local server and opens the interface in the default browser.
+Nothing needs to be installed globally on the computer.
 
 The first-launch **Setup & update** tab asks for a SurveyCTO server, username, and password. The
 connection is verified before the server is saved. Credentials are stored in the operating-system
@@ -62,5 +66,5 @@ and leaves one canonical downloaded copy of each form. Use `surveycto-library up
 
 Dependencies are locked in `uv.lock`. Install the tested development environment with `uv sync
 --frozen --extra dev`; include `--extra release` for PyInstaller builds. GitHub Actions tests the
-same code on macOS, Windows, and Linux and creates macOS Apple Silicon, macOS Intel, and Windows x64
-artifacts from version tags.
+same code on macOS, Windows, and Linux. Version tags create two single-file macOS disk images—Apple
+Silicon and Intel—and one self-contained Windows executable.

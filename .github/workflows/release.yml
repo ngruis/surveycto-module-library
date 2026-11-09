@@ -16,10 +16,13 @@ jobs:
         include:
           - os: macos-latest
             artifact: SurveyCTO-Module-Library-macOS-Apple-Silicon
+            package: SurveyCTO-Module-Library-macOS-Apple-Silicon.dmg
           - os: macos-15-intel
             artifact: SurveyCTO-Module-Library-macOS-Intel
+            package: SurveyCTO-Module-Library-macOS-Intel.dmg
           - os: windows-latest
             artifact: SurveyCTO-Module-Library-Windows-x64
+            package: SurveyCTO-Module-Library-Windows-x64.exe
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
@@ -32,17 +35,21 @@ jobs:
           enable-cache: true
       - run: uv sync --frozen --extra release
       - run: uv run pyinstaller packaging/surveycto_module_library.spec --noconfirm --clean
-      - name: Archive macOS application
+      - name: Create macOS disk image
         if: runner.os == 'macOS'
-        run: ditto -c -k --keepParent "dist/SurveyCTO Module Library.app" "dist/${{ matrix.artifact }}.zip"
-      - name: Archive Windows application
+        run: |
+          mkdir -p dist/dmg-root
+          ditto "dist/SurveyCTO Module Library.app" "dist/dmg-root/SurveyCTO Module Library.app"
+          ln -s /Applications dist/dmg-root/Applications
+          hdiutil create -volname "SurveyCTO Module Library" -srcfolder dist/dmg-root -ov -format UDZO "dist/${{ matrix.package }}"
+      - name: Prepare Windows executable
         if: runner.os == 'Windows'
         shell: pwsh
-        run: Compress-Archive -Path 'dist\SurveyCTO Module Library\*' -DestinationPath 'dist\${{ matrix.artifact }}.zip'
+        run: Move-Item 'dist\SurveyCTO Module Library.exe' 'dist\${{ matrix.package }}'
       - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.artifact }}
-          path: dist/${{ matrix.artifact }}.zip
+          path: dist/${{ matrix.package }}
           if-no-files-found: error
 
   publish:
@@ -59,4 +66,4 @@ jobs:
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${GITHUB_REF_NAME}" release-artifacts/*.zip --generate-notes --verify-tag
+        run: gh release create "${GITHUB_REF_NAME}" release-artifacts/* --generate-notes --verify-tag

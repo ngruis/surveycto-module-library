@@ -34,28 +34,27 @@ analysis = Analysis(
     noarchive=False,
 )
 pyz = PYZ(analysis.pure)
-executable = EXE(
-    pyz,
-    analysis.scripts,
-    [],
-    exclude_binaries=True,
-    name="SurveyCTO Module Library",
-    debug=False,
-    bootloader_ignore_signals=False,
-    strip=False,
-    upx=True,
-    console=False,
-)
-collection = COLLECT(
-    executable,
-    analysis.binaries,
-    analysis.datas,
-    strip=False,
-    upx=True,
-    name="SurveyCTO Module Library",
-)
-
 if sys.platform == "darwin":
+    executable = EXE(
+        pyz,
+        analysis.scripts,
+        [],
+        exclude_binaries=True,
+        name="SurveyCTO Module Library",
+        debug=False,
+        bootloader_ignore_signals=False,
+        strip=False,
+        upx=True,
+        console=False,
+    )
+    collection = COLLECT(
+        executable,
+        analysis.binaries,
+        analysis.datas,
+        strip=False,
+        upx=True,
+        name="SurveyCTO Module Library",
+    )
     application = BUNDLE(
         collection,
         name="SurveyCTO Module Library.app",
@@ -64,4 +63,18 @@ if sys.platform == "darwin":
             "CFBundleDisplayName": "SurveyCTO Module Library",
             "NSHighResolutionCapable": True,
         },
+    )
+else:
+    executable = EXE(
+        pyz,
+        analysis.scripts,
+        analysis.binaries,
+        analysis.datas,
+        [],
+        name="SurveyCTO Module Library",
+        debug=False,
+        bootloader_ignore_signals=False,
+        strip=False,
+        upx=True,
+        console=False,
     )
