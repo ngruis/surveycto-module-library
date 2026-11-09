@@ -35,6 +35,45 @@ jobs:
           enable-cache: true
       - run: uv sync --frozen --extra release
       - run: uv run pyinstaller packaging/surveycto_module_library.spec --noconfirm --clean
+      - name: Smoke-test macOS application
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          export SURVEYCTO_LIBRARY_DATA_DIR="$RUNNER_TEMP/surveycto-smoke-data"
+          export SURVEYCTO_LIBRARY_PORT=8765
+          export SURVEYCTO_LIBRARY_HEADLESS=true
+          "dist/SurveyCTO Module Library.app/Contents/MacOS/SurveyCTO Module Library" >"$RUNNER_TEMP/surveycto-app.log" 2>&1 &
+          app_pid=$!
+          trap 'kill "$app_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:8765/_stcore/health | grep --quiet ok; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/surveycto-app.log"
+          exit 1
+      - name: Smoke-test Windows application
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:SURVEYCTO_LIBRARY_DATA_DIR = "$env:RUNNER_TEMP\surveycto-smoke-data"
+          $env:SURVEYCTO_LIBRARY_PORT = '8765'
+          $env:SURVEYCTO_LIBRARY_HEADLESS = 'true'
+          $process = Start-Process -FilePath 'dist\SurveyCTO Module Library.exe' -PassThru
+          try {
+            foreach ($attempt in 1..60) {
+              try {
+                $response = Invoke-WebRequest -Uri 'http://127.0.0.1:8765/_stcore/health' -UseBasicParsing
+                if ($response.Content.Trim() -eq 'ok') { exit 0 }
+              } catch {
+                Start-Sleep -Seconds 1
+              }
+            }
+            throw 'The packaged application did not start its local website within 60 seconds.'
+          } finally {
+            Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+          }
       - name: Create macOS disk image
         if: runner.os == 'macOS'
         run: |

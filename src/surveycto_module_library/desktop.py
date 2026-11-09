@@ -22,14 +22,16 @@ def main() -> int:
         raise RuntimeError(f"The application interface is missing: {app_path}")
 
     os.environ.setdefault("STREAMLIT_BROWSER_GATHER_USAGE_STATS", "false")
-    port = _available_port()
+    configured_port = os.getenv("SURVEYCTO_LIBRARY_PORT")
+    port = int(configured_port) if configured_port else _available_port()
+    headless = os.getenv("SURVEYCTO_LIBRARY_HEADLESS", "false").lower()
     sys.argv = [
         "streamlit",
         "run",
         str(app_path),
         "--server.address=127.0.0.1",
         f"--server.port={port}",
-        "--server.headless=false",
+        f"--server.headless={headless}",
         "--global.developmentMode=false",
         "--browser.serverAddress=localhost",
         "--browser.gatherUsageStats=false",
