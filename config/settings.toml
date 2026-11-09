@@ -1,0 +1,13 @@
+[surveycto]
+server = "jpalmena"
+
+[library]
+database = "data/database/module_library.sqlite3"
+raw_directory = "data/raw"
+export_directory = "data/exports"
+log_directory = "logs"
+default_language = "English"
+
+[classification]
+provider = "rules"
+external_models_enabled = false

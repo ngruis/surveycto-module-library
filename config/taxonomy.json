@@ -1,0 +1,85 @@
+{
+  "Household and Demographics": {
+    "Demographics": ["age", "birth date", "date of birth", "marital", "married", "sex", "gender of respondent", "عمر", "السن", "تاريخ الميلاد", "الحالة الاجتماعية"],
+    "Household roster": ["household member", "household roster", "relationship to head", "family member", "children", "child", "أسرة", "الأسرة", "فرد الأسرة", "صلة القرابة", "أطفال"],
+    "Housing and services": ["housing", "dwelling", "home ownership", "electricity", "drinking water", "sanitation", "toilet", "منزل", "مسكن", "كهرباء", "مياه", "مرحاض"]
+  },
+  "Education": {
+    "Enrollment and attendance": ["school", "enroll", "enrol", "attendance", "absent", "grade", "مدرسة", "الالتحاق", "الحضور"],
+    "Learning and skills": ["literacy", "numeracy", "test score", "reading", "mathematics", "learning", "قراءة", "تعلم", "مهارات"],
+    "Teachers and schools": ["teacher", "classroom", "school quality", "principal", "nursery", "معلم", "مدرس"]
+  },
+  "Health": {
+    "General health": ["health", "illness", "disease", "doctor", "clinic", "hospital", "medicine", "disability", "صحة", "مرض", "طبيب", "مستشفى"],
+    "Mental health and wellbeing": ["mental health", "depress", "anxiety", "stress", "wellbeing", "well being", "sad", "phq", "قلق", "اكتئاب", "ضغط نفسي", "رفاه"],
+    "Maternal and child health": ["pregnan", "antenatal", "birth", "breastfeed", "child health", "vaccin", "تغذية", "حمل", "ولادة", "رضاعة"],
+    "Reproductive health": ["contracept", "family planning", "reproductive health", "menstru", "وسيلة منع الحمل", "تنظيم الأسرة", "الصحة الإنجابية"]
+  },
+  "Gender and Agency": {
+    "Decision-making and agency": ["decision", "agency", "influence", "autonomy", "permission", "control over", "who decides", "قرار", "استقلال", "من يقرر", "مين بيقرر"],
+    "Gender norms": ["gender norm", "role of women", "women should", "wife should", "husband should", "gender attitude", "أدوار المرأة", "المرأة يجب", "الزوجة"],
+    "Mobility": ["mobility", "permission to go", "allowed to visit", "travel alone", "حرية الحركة", "الخروج من المنزل", "إذن للخروج"],
+    "Gender-based violence": ["domestic violence", "gender based violence", "intimate partner violence", "husband hit", "wife beating", "violence against women", "عنف منزلي", "العنف ضد المرأة", "ضرب الزوجة"]
+  },
+  "Labor and Livelihoods": {
+    "Employment": ["job", "work", "employ", "occupation", "wage", "salary", "hours worked", "labor supply", "عمل", "وظيفة", "أجر", "مهنة"],
+    "Job search": ["job search", "look for work", "applied for a job", "employment office", "search for job", "البحث عن عمل", "التقديم لوظيفة"],
+    "Enterprise and self-employment": ["business", "enterprise", "self employ", "profit", "sales", "firm", "مشروع", "عمل حر", "مبيعات", "أرباح"]
+  },
+  "Income, Consumption and Assets": {
+    "Income and earnings": ["income", "earnings", "revenue", "دخل", "إيراد"],
+    "Consumption and expenditures": ["consumption", "expenditure", "expense", "spending", "cost of", "purchase", "إنفاق", "مصروفات", "تكلفة", "شراء"],
+    "Household assets": ["asset", "ownership of", "own a", "wealth", "durable goods", "أصول", "ممتلكات", "يمتلك"],
+    "Livestock assets": ["livestock", "cattle", "cow", "goat", "sheep", "poultry", "ماشية", "أبقار", "أغنام", "ماعز", "دواجن"]
+  },
+  "Financial Inclusion": {
+    "Savings": ["saving", "savings account", "saved money", "ادخار", "حساب توفير"],
+    "Credit and debt": ["loan", "credit", "debt", "borrow", "repay", "قرض", "دين", "اقتراض", "سداد"],
+    "Banking and payments": ["bank account", "mobile money", "digital payment", "wallet", "حساب بنكي", "محفظة إلكترونية", "دفع إلكتروني"]
+  },
+  "Agriculture": {
+    "Land and farming": ["agricultur", "farm", "farmer", "land owned", "plot", "cultivat", "زراعة", "مزارع", "أرض زراعية", "حيازة"],
+    "Crops and production": ["crop", "harvest", "seed", "fertilizer", "irrigation", "season", "محصول", "حصاد", "بذور", "سماد", "ري"],
+    "Agricultural markets": ["crop price", "sold crop", "agricultural market", "input dealer", "سعر المحصول", "بيع المحصول", "سوق زراعي"]
+  },
+  "Food Security": {
+    "Food access": ["food security", "hungry", "meal", "food shortage", "skip meals", "طعام", "جوع", "وجبة", "نقص الغذاء"],
+    "Diet and nutrition": ["diet", "dietary diversity", "nutrition", "food group", "غذاء", "تنوع غذائي", "تغذية"]
+  },
+  "Migration and Displacement": {
+    "Migration": ["migrat", "move to", "place of origin", "destination", "remittance", "هجرة", "مهاجر", "تحويلات"],
+    "Refugees and displacement": ["refugee", "displaced", "displacement", "host community", "لاجئ", "نازح", "نزوح"]
+  },
+  "Social Networks and Community": {
+    "Social networks": ["social network", "friend", "neighbor", "community member", "support network", "شبكة اجتماعية", "صديق", "جار"],
+    "Civic participation": ["community meeting", "volunteer", "civic", "association member", "اجتماع مجتمعي", "تطوع", "جمعية"],
+    "Trust and social cohesion": ["trust", "social cohesion", "feel safe", "community conflict", "ثقة", "تماسك اجتماعي", "الأمان"]
+  },
+  "Time Use": {
+    "Time allocation": ["time use", "hours per day", "hours spent", "daily activity", "yesterday activity", "استخدام الوقت", "عدد الساعات", "النشاط اليومي"],
+    "Care and domestic work": ["childcare", "care work", "housework", "domestic chores", "رعاية الأطفال", "أعمال منزلية"]
+  },
+  "Beliefs, Attitudes and Aspirations": {
+    "Beliefs and attitudes": ["believe", "belief", "agree or disagree", "opinion", "attitude", "تعتقد", "اعتقاد", "رأي", "موافق أو غير موافق"],
+    "Aspirations and expectations": ["aspiration", "hope for", "expect to", "future plan", "طموح", "تتمنى", "توقعات", "خطة مستقبلية"],
+    "Risk and preferences": ["risk preference", "willing to take risk", "patience", "time preference", "تفضيل المخاطرة", "الصبر"]
+  },
+  "Program Participation": {
+    "Participation and take-up": ["program participation", "participated in", "enrolled in program", "take up", "intervention", "شارك في البرنامج", "الاشتراك في البرنامج", "تدخل"],
+    "Services and satisfaction": ["satisfaction", "satisfied with", "service quality", "feedback", "رضا", "جودة الخدمة", "تقييم الخدمة"],
+    "Training": ["training", "course attended", "workshop", "تدريب", "دورة", "ورشة"]
+  },
+  "Social Protection": {
+    "Transfers and assistance": ["cash transfer", "benefit", "assistance", "aid", "subsid", "مساعدة", "دعم", "تحويل نقدي"],
+    "Insurance and pensions": ["insurance", "pension", "social security", "تأمين", "معاش", "ضمان اجتماعي"]
+  },
+  "Technology and Communication": {
+    "Phone and internet access": ["mobile phone", "smartphone", "internet access", "phone ownership", "هاتف محمول", "تليفون", "إنترنت"],
+    "Digital skills and use": ["digital skill", "computer use", "use the internet", "مهارات رقمية", "استخدام الكمبيوتر", "استخدام الإنترنت"]
+  },
+  "Survey Operations and Quality": {
+    "Consent and eligibility": ["consent", "assent", "eligible", "eligibility", "موافقة", "مؤهل", "الأهلية"],
+    "Enumerator and quality checks": ["enumerator", "back check", "quality control", "audio audit", "survey check", "researcher only", "للباحث", "عداد", "مراجعة الاستبيان"],
+    "Contact and location": ["phone number", "contact number", "address", "governorate", "district", "gps", "رقم الهاتف", "العنوان", "المحافظة", "المركز"]
+  }
+}

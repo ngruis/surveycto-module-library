@@ -1,0 +1,62 @@
+name: Build release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            artifact: SurveyCTO-Module-Library-macOS-Apple-Silicon
+          - os: macos-15-intel
+            artifact: SurveyCTO-Module-Library-macOS-Intel
+          - os: windows-latest
+            artifact: SurveyCTO-Module-Library-Windows-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v10
+        with:
+          version: "latest-known"
+          enable-cache: true
+      - run: uv sync --frozen --extra release
+      - run: uv run pyinstaller packaging/surveycto_module_library.spec --noconfirm --clean
+      - name: Archive macOS application
+        if: runner.os == 'macOS'
+        run: ditto -c -k --keepParent "dist/SurveyCTO Module Library.app" "dist/${{ matrix.artifact }}.zip"
+      - name: Archive Windows application
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: Compress-Archive -Path 'dist\SurveyCTO Module Library\*' -DestinationPath 'dist\${{ matrix.artifact }}.zip'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist/${{ matrix.artifact }}.zip
+          if-no-files-found: error
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          path: release-artifacts
+          merge-multiple: true
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" release-artifacts/*.zip --generate-notes --verify-tag
