@@ -47,6 +47,13 @@ def results(filters: SearchFilters):
     return search_questions(settings.database_path, filters)
 
 
+def session_credentials(server: str) -> Credentials | None:
+    key = f"credentials:{server}"
+    if key not in st.session_state:
+        st.session_state[key] = load_credentials(server)
+    return st.session_state[key]
+
+
 st.title("SurveyCTO Module Library")
 if settings.server_configured:
     st.caption(f"Reusable questions and modules from deployed forms on `{settings.server}`")
@@ -64,7 +71,7 @@ with setup_tab:
     else:
         st.info("Connect a SurveyCTO server before downloading its deployed form definitions.")
 
-    saved_credentials = load_credentials(settings.server) if settings.server_configured else None
+    saved_credentials = session_credentials(settings.server) if settings.server_configured else None
     with st.form("connection_form"):
         server_value = st.text_input(
             "Server name or URL",
@@ -88,13 +95,14 @@ with setup_tab:
                 form_count = len(SurveyCTOApiRetriever(server, candidate).list_form_ids())
             save_selected_server(settings.storage_root, server)
             save_credentials(server, candidate.username, candidate.password)
+            st.session_state[f"credentials:{server}"] = candidate
         except Exception as exc:  # noqa: BLE001 - show connection errors without saving secrets
             st.error(f"The connection could not be verified: {exc}")
         else:
             st.success(f"Connection verified. {form_count:,} deployed forms are accessible.")
             st.rerun()
 
-    current_credentials = load_credentials(settings.server) if settings.server_configured else None
+    current_credentials = saved_credentials
     st.divider()
     st.subheader("Update the local library")
     if not settings.server_configured or current_credentials is None:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import getpass
+import json
 import subprocess
 from dataclasses import dataclass
 
@@ -16,18 +17,26 @@ class Credentials:
 
 
 def load_credentials(server: str) -> Credentials | None:
-    username = keyring.get_password(SERVICE, f"{server}:username")
-    if not username:
+    encoded = keyring.get_password(SERVICE, f"{server}:credentials")
+    if not encoded:
         return None
-    password = keyring.get_password(SERVICE, f"{server}:{username}")
-    if not password:
+    try:
+        payload = json.loads(encoded)
+        username = str(payload["username"])
+        password = str(payload["password"])
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return None
+    if not username or not password:
         return None
     return Credentials(username=username, password=password)
 
 
 def save_credentials(server: str, username: str, password: str) -> None:
-    keyring.set_password(SERVICE, f"{server}:username", username)
-    keyring.set_password(SERVICE, f"{server}:{username}", password)
+    keyring.set_password(
+        SERVICE,
+        f"{server}:credentials",
+        json.dumps({"username": username, "password": password}),
+    )
 
 
 def prompt_and_save(server: str, popup: bool = False) -> Credentials:
